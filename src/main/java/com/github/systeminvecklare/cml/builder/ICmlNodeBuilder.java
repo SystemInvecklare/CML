@@ -6,5 +6,6 @@ public interface ICmlNodeBuilder {
 	ICmlNodeBuilder addProperty(String name, String tagName);
 	void setAttribute(String name, String value);
 	ICmlNodeBuilder addChild(String name);
+	ICmlNodeBuilder setValue(String value);
 	ICmlNode getNode();
 }

@@ -9,5 +9,7 @@ public interface ICmlNode {
 	IKeyValueSet<String, ICmlNode> getProperties();
 	ICmlNode getChild(String name);
 	List<ICmlNode> getChildren(String name);
+	String getValue();
+	String getValue(String fallback);
 	CmlNode copy();
 }

@@ -32,6 +32,12 @@ public class CmlNodeBuilder implements ICmlNodeBuilder {
 		node.addChild(child);
 		return new CmlNodeBuilder(child);
 	}
+	
+	@Override
+	public ICmlNodeBuilder setValue(String value) {
+		node.setValue(value);
+		return this;
+	}
 
 	@Override
 	public ICmlNode getNode() {

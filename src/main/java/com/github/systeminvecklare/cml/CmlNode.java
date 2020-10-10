@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public final class CmlNode implements ICmlNode {
+	private static final String VALUE_ATTRIBUTE_NAME = "value";
+	
 	private String name;
 	private final KeyValueSet<String, String> attributes = new KeyValueSet<>();
 	private final KeyValueSet<String, ICmlNode> properties = new KeyValueSet<>();
@@ -79,6 +81,20 @@ public final class CmlNode implements ICmlNode {
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public String getValue() {
+		return this.getAttributes().get(VALUE_ATTRIBUTE_NAME);
+	}
+	
+	@Override
+	public String getValue(String fallback) {
+		return this.getAttributes().get(VALUE_ATTRIBUTE_NAME, fallback);
+	}
+
+	public void setValue(String value) {
+		this.getAttributes().set(VALUE_ATTRIBUTE_NAME, value);
 	}
 	
 	@Override
