@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.github.systeminvecklare.cml.printer.IStringPrinter;
+import com.github.systeminvecklare.cml.printer.StringPrinter;
+
 public final class CmlNode implements ICmlNode {
 	private static final String VALUE_ATTRIBUTE_NAME = "value";
+	private static final IStringPrinter DEFAULT_TO_STRING = StringPrinter.builder().setUseLineBreaks(false).build();
 	
 	private String name;
 	private final KeyValueSet<String, String> attributes = new KeyValueSet<>();
@@ -110,5 +114,10 @@ public final class CmlNode implements ICmlNode {
 			copy.properties.set(property.getName(), property.getValue().copy());
 		}
 		return copy;
+	}
+	
+	@Override
+	public String toString() {
+		return DEFAULT_TO_STRING.toString(this);
 	}
 }
