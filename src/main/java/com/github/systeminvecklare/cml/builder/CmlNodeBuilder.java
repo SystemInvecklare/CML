@@ -22,8 +22,9 @@ public class CmlNodeBuilder implements ICmlNodeBuilder {
 	}
 
 	@Override
-	public void setAttribute(String name, String value) {
+	public ICmlNodeBuilder setAttribute(String name, String value) {
 		node.getAttributes().set(name, value);
+		return this;
 	}
 
 	@Override
