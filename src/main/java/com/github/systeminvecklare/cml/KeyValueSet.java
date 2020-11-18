@@ -36,6 +36,9 @@ public final class KeyValueSet<K, V> implements IKeyValueSet<K, V> {
 
 	@Override
 	public V get(K key) {
+		if(!map.containsKey(key)) {
+			throw new IllegalArgumentException("No value for key "+key);
+		}
 		return map.get(key);
 	}
 

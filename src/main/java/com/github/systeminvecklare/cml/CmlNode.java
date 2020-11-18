@@ -18,7 +18,7 @@ public final class CmlNode implements ICmlNode {
 	
 
 	public CmlNode(String name) {
-		this.name = name;
+		this.name = CmlValidation.validateNodeName(name);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public final class CmlNode implements ICmlNode {
 	}
 	
 	public void setName(String name) {
-		this.name = name;
+		this.name = CmlValidation.validateNodeName(name);
 	}
 
 	@Override

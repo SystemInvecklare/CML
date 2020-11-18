@@ -3,6 +3,7 @@ package com.github.systeminvecklare.cml.parser;
 import java.io.IOException;
 import java.io.Reader;
 
+import com.github.systeminvecklare.cml.CmlValidation;
 import com.github.systeminvecklare.cml.ICmlNode;
 
 public final class CmlParser implements ICmlParser {
@@ -268,7 +269,7 @@ public final class CmlParser implements ICmlParser {
 		}
 
 		private boolean isSyntax(char c) {
-			return c == '{' || c == '}' || c == ',' || c == '(' || c == ')' || c == '=';
+			return CmlValidation.isSyntax(c);
 		}
 
 		private void endToken() {
