@@ -9,6 +9,8 @@ import com.github.systeminvecklare.cml.parser.ReaderCharSource;
 public class CommentSkipper implements ICharSource {
 	private final ICharSource wrapped;
 	private int buffered = -1;
+	private boolean inString = false;
+	private boolean escapedInString = false;
 	
 	public CommentSkipper(ICharSource wrapped) {
 		this.wrapped = wrapped;
@@ -25,29 +27,46 @@ public class CommentSkipper implements ICharSource {
 			return read;
 		} else {
 			char readChar = (char) read;
-			if(readChar == '/') {
-				int nextRead = getNext();
-				if(nextRead == -1) {
-					return read;
+			if(inString) {
+				if(escapedInString) {
+					escapedInString = false;
 				} else {
-					char nextReadChar = (char) nextRead;
-					if(nextReadChar == '/') {
-						//Comment has begun. Read until end of line
-						while(true) {
-							int comment = getNext();
-							if(comment == -1) {
-								return -1;
-							} else if(((char) comment) == '\n') {
-								return comment;
-							}
-						}
-					} else {
-						buffered = nextRead;
-						return read;
+					if(readChar == '\\') {
+						escapedInString = true;
+					} else if(readChar == '"') {
+						inString = false;
 					}
 				}
-			} else {
 				return read;
+			} else {
+				if(readChar == '"') {
+					inString = true;
+					escapedInString = false;
+					return read;
+				} else if(readChar == '/') {
+					int nextRead = getNext();
+					if(nextRead == -1) {
+						return read;
+					} else {
+						char nextReadChar = (char) nextRead;
+						if(nextReadChar == '/') {
+							//Comment has begun. Read until end of line
+							while(true) {
+								int comment = getNext();
+								if(comment == -1) {
+									return -1;
+								} else if(((char) comment) == '\n') {
+									return comment;
+								}
+							}
+						} else {
+							buffered = nextRead;
+							return read;
+						}
+					}
+				} else {
+					return read;
+				}
 			}
 		}
 	}
